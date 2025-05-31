@@ -182,7 +182,7 @@ export default function Template2() {
                 </div>
               )}
 
-              {/* <p className="sub-heading">{profile.linkden}</p> */}
+               <p className="sub-heading">{profile.linkden}</p> 
             </div>
 
             <div className="resume-contents">
@@ -267,8 +267,8 @@ export default function Template2() {
                     </div>
                   </div>
                 </div>
-                {/* <hr /> */}
-                {/* Part 2 */}
+               
+                
                 <div className="clg-section-2">
                   <div className="info-1">
                     <div className="clg-name">
@@ -287,8 +287,7 @@ export default function Template2() {
                     </div>
                   </div>
                 </div>
-                {/* <hr /> */}
-                {/* Part 3 */}
+                
                 <div className="clg-section-3">
                   <div className="info-1">
                     <div className="school-name">
@@ -308,7 +307,7 @@ export default function Template2() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> 
 
 
               {/* Skiils */}
@@ -442,4 +441,3 @@ export default function Template2() {
     </>
   );
 }
-

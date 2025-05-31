@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import resume1 from '../assets/resume_template1.jpg';
 import resume2 from '../assets/resume_template2.jpg';
+import resume3 from '../assets/resume_template3.png';
+import resume4 from '../assets/resume_template4.png';
+import resume5 from '../assets/resume_template5.png';
+ // 👈 Import Template 4 image
+
 import { useNavigate } from 'react-router-dom';
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -8,11 +13,10 @@ import '../styles/template.css';
 
 const Templates = () => {
     const [selectedTemplate, setSelectedTemplate] = useState(null);
-    const [template, setTemplate] = useState(1);
     const navigate = useNavigate();
 
-    const handleTemplateClick = (template) => {
-        setSelectedTemplate(template);
+    const handleTemplateClick = (templateImage) => {
+        setSelectedTemplate(templateImage);
     };
 
     const handleClose = () => {
@@ -35,7 +39,20 @@ const Templates = () => {
                     <img className="template" src={resume2} alt="Template 2" width={'280px'} height={'380px'} />
                     <p onClick={() => handleResumeClick(2)}>Use Template</p>
                 </div>
+                <div onClick={() => handleTemplateClick(resume3)}>
+                    <img className="template" src={resume3} alt="Template 3" width={'280px'} height={'380px'} />
+                    <p onClick={() => handleResumeClick(3)}>Use Template</p>
+                </div>
+                <div onClick={() => handleTemplateClick(resume4)}>
+                    <img className="template" src={resume4} alt="Template 4" width={'280px'} height={'380px'} />
+                    <p onClick={() => handleResumeClick(4)}>Use Template</p>
+                </div>
+                <div onClick={() => handleTemplateClick(resume5)}>
+                    <img className="template" src={resume5} alt="Template 5" width={'280px'} height={'380px'} />
+                    <p onClick={() => handleResumeClick(5)}>Use Template</p>
+                </div>
             </div>
+
             {selectedTemplate && (
                 <div className="template-preview-overlay" onClick={handleClose}>
                     <div className="template-preview">

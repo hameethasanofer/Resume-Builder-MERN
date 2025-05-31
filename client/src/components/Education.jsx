@@ -53,7 +53,7 @@ const Education = () => {
     "Civil",
     "Chemical",
   ];
-  const otherFields = ["B.E.", "B.Tech", "BCA", "Bsc", "MBA", "M.Tech"];
+  const otherFields = ["E.tech", "B.Tech", "ICT", "AQT", "ANS", "M.Tech"];
 
   const higherCollegeBoard = ["Maharashtra State Board", "CBSE", "ICSE", "Diploma"];
   const schoolBoard = ["Maharashtra State Board", "CBSE", "ICSE"];
@@ -103,71 +103,82 @@ const Education = () => {
                 />
               </Grid>
               <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
+               <TextField
                   select
                   margin="dense"
                   variant="outlined"
-                  name="year"
+                  name="Year"
                   label="Year"
                   style={{ width: "100%" }}
-                  value={education.year}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton>
+                          <EventIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  value={education.startYear}
                   onChange={handleChange}
                 >
-                  <MenuItem value="F.E">F.E</MenuItem>
-                  <MenuItem value="S.E">S.E</MenuItem>
-                  <MenuItem value="T.E">T.E</MenuItem>
-                  <MenuItem value="B.E">B.E</MenuItem>
-                  <MenuItem value="">Clear Selection</MenuItem> {/* Add this line */}
+                  <MenuItem value="" disabled>
+                    Select Year
+                  </MenuItem>
+                  {years.map((year) => (
+                    <MenuItem key={year} value={year}>
+                      {year}
+                    </MenuItem>
+                  ))}
+                  <MenuItem value="">Clear Selection</MenuItem>
                 </TextField>
               </Grid>
               <Grid item md={4} sm={12} xs={12} lg={4}>
                 <TextField
-                  select
                   margin="dense"
                   variant="outlined"
+                  type="text"
                   name="field"
-                  label="Field of Study"
+                  label="Field"
                   style={{ width: "100%" }}
                   required
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton>
+                          <SchoolIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                   value={education.field}
                   onChange={handleChange}
-                >
-                  <MenuItem value="" disabled>
-                    Select Field
-                  </MenuItem>
-                  {otherFields.map((field) => (
-                    <MenuItem key={field} value={field}>
-                      {field}
-                    </MenuItem>
-                  ))}
-                  <MenuItem value="">Clear Selection</MenuItem> {/* Add this line */}
-                </TextField>
+                />
               </Grid>
             </Grid>
             {/* Row 2 */}
             <Grid container spacing={1} alignItems="center" lg={12} mb={2}>
               <Grid item md={4} sm={12} xs={12} lg={4}>
                 <TextField
-                  select
                   margin="dense"
                   variant="outlined"
+                  type="text"
                   name="branch"
-                  label="Select Branch"
+                  label="branch"
                   style={{ width: "100%" }}
                   required
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {/* <IconButton>
+                          <SchoolIcon />
+                        </IconButton> */}
+                      </InputAdornment>
+                    ),
+                  }}
                   value={education.branch}
                   onChange={handleChange}
-                >
-                  <MenuItem value="" disabled>
-                    Select Branch
-                  </MenuItem>
-                  {engineeringFields.map((field) => (
-                    <MenuItem key={field} value={field}>
-                      {field}
-                    </MenuItem>
-                  ))}
-                  <MenuItem value="">Clear Selection</MenuItem> {/* Add this line */}
-                </TextField>
+                />
               </Grid>
               <Grid item md={4} sm={12} xs={12} lg={4}>
                 <TextField
@@ -276,14 +287,14 @@ const Education = () => {
               </Grid>
             </Grid>
           </Grid>
-          {/* 12th Details */}
+          {/* 12th Details 
           <Grid container spacing={1} alignItems="center" lg={12} mt={2}>
             <div>
               <Typography variant="h6" align="left">
                 Higher secondary education (12th) Details
               </Typography>
             </div>
-            {/* Row 1 */}
+            
             <Grid container spacing={1} alignItems="center" lg={12}>
               <Grid item md={4} sm={12} xs={12} lg={4}>
                 <TextField
@@ -335,7 +346,7 @@ const Education = () => {
                       {year}
                     </MenuItem>
                   ))}
-                  <MenuItem value="">Clear Selection</MenuItem> {/* Add this line */}
+                  <MenuItem value="">Clear Selection</MenuItem> {/* Add this line 
                 </TextField>
               </Grid>
               <Grid item md={4} sm={12} xs={12} lg={4}>
@@ -366,11 +377,11 @@ const Education = () => {
                       {year}
                     </MenuItem>
                   ))}
-                  <MenuItem value="">Clear Selection</MenuItem> {/* Add this line */}
+                  <MenuItem value="">Clear Selection</MenuItem> {/* Add this line 
                 </TextField>
               </Grid>
             </Grid>
-            {/* Row 2 */}
+            {/* Row 2 
             <Grid container spacing={1} alignItems="center" lg={12}>
               <Grid item md={4} sm={12} xs={12} lg={4}>
                 <TextField
@@ -435,19 +446,22 @@ const Education = () => {
                       {field}
                     </MenuItem>
                   ))}
-                  <MenuItem value="">Clear Selection</MenuItem> {/* Add this line */}
+                  <MenuItem value="">Clear Selection</MenuItem> {/* Add this line 
                 </TextField>
               </Grid>
             </Grid>
           </Grid>
-          {/* 10th Details */}
+          */}
+
+
+          {/*10th Details 
           <Grid container spacing={1} alignItems="center" lg={12} mt={2}>
             <div>
               <Typography variant="h6" align="left">
                 Secondary education (10th) Details
               </Typography>
             </div>
-            {/* Row 1 */}
+              
             <Grid container spacing={1} alignItems="center" lg={12}>
               <Grid item md={4} sm={12} xs={12} lg={4}>
                 <TextField
@@ -499,7 +513,7 @@ const Education = () => {
                       {year}
                     </MenuItem>
                   ))}
-                  <MenuItem value="">Clear Selection</MenuItem> {/* Add this line */}
+                  <MenuItem value="">Clear Selection</MenuItem> 
                 </TextField>
               </Grid>
               <Grid item md={4} sm={12} xs={12} lg={4}>
@@ -530,11 +544,11 @@ const Education = () => {
                       {year}
                     </MenuItem>
                   ))}
-                  <MenuItem value="">Clear Selection</MenuItem> {/* Add this line */}
+                  <MenuItem value="">Clear Selection</MenuItem>  
                 </TextField>
               </Grid>
             </Grid>
-            {/* Row 2 */}
+            
             <Grid container spacing={1} alignItems="center" lg={12}>
               <Grid item md={4} sm={12} xs={12} lg={4}>
                 <TextField
@@ -599,11 +613,12 @@ const Education = () => {
                       {field}
                     </MenuItem>
                   ))}
-                  <MenuItem value="">Clear Selection</MenuItem> {/* Add this line */}
+                  <MenuItem value="">Clear Selection</MenuItem> 
                 </TextField>
               </Grid>
             </Grid>
-          </Grid>
+          </Grid> */}
+          
         </div>
       </CardContent>
 

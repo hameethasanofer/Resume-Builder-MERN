@@ -1,7 +1,6 @@
-import { Box, Button, Paper, Typography, CircularProgress } from "@mui/material";
+import { Box, Button, Paper, CircularProgress } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { saveAs } from "file-saver";
 import Confetti from "react-confetti";
 import github from "../../assets/github.png";
 import leetcode from "../../assets/leetcode.png";
@@ -13,9 +12,6 @@ import { Link } from "react-router-dom";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import moment from "moment";
-import html2canvas from 'html2canvas';
-import { jsPDF } from 'jspdf';
-// import { saveAs } from "file-saver";
 import html2pdf from "html2pdf.js";
 import Feedback from "../Feedback";
 
@@ -31,6 +27,9 @@ export default function Template1() {
   const [open, setOpen] = useState(false);
   const [feedbackShown, setFeedbackShown] = useState(false);
 
+  console.log(profile, education, projects, experience, extraDetails);
+
+
   useEffect(() => {
     const feedbackAlreadyShown = localStorage.getItem('feedbackShown');
     if (feedbackAlreadyShown) {
@@ -38,11 +37,9 @@ export default function Template1() {
     }
   }, []);
 
-
   const handleDownload = () => {
     try {
       const resumeContainer = document.querySelector(".resume-container");
-
       if (resumeContainer) {
         setLoading(true);
         const opt = {
@@ -51,14 +48,10 @@ export default function Template1() {
           image: { type: 'jpeg', quality: 1.00 },
           html2canvas: { scale: 4 },
           jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
-          // pagebreak: { mode: ['avoid-all', 'css', 'legacy'] } // Ensure proper page breaks
         };
-
         html2pdf().set(opt).from(resumeContainer).save().then(() => {
-          setLoading(false); // End loading state after PDF is generated
-          setCongratsVisible(true); // Trigger Confetti effect
-
-          // Reset confetti after 5 seconds
+          setLoading(false);
+          setCongratsVisible(true);
           setTimeout(() => {
             setCongratsVisible(false);
           }, 5000);
@@ -81,21 +74,15 @@ export default function Template1() {
     setOpen(false);
   };
 
-
-
-
-
   const customStyle = {
     width: "100%",
     maxWidth: "794px",
-    // margin: "auto",
     height: "1123px",
     maxHeight: "1123px",
     padding: "1rem 2rem 1rem 2rem",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
     backgroundColor: "#ffffff",
     display: "flex",
-    // justifyContent: "center",
     flexDirection: "column",
   };
 
@@ -144,8 +131,7 @@ export default function Template1() {
                 <p > <i className="fa-solid fa-map-marker" /></p>
                 <p className="sub-heading">{profile.address}</p>
               </div>
-
-              {/* <p className="sub-heading">{profile.linkden}</p> */}
+              <p className="sub-heading">{profile.linkden}</p>
             </div>
 
             <div className="resume-content">
@@ -161,7 +147,7 @@ export default function Template1() {
                     <div className="college">{education.college}</div>
                     <div className="clg-details">
                       <div className="clg-degree">
-                        {education.year} {education.branch} Engineering
+                        {education.field} - {education.branch}
                       </div>
                       <div className="meta-data">
                         <div className="dates">
@@ -173,13 +159,13 @@ export default function Template1() {
                           {education.city}
                         </div>
                       </div>
-                      <div className="grade">
+                      {/* <div className="grade">
                         {education?.grades && <p>CGPA: {education?.grades}</p>}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
-                  {/* Part 2 */}
-                  <div className="info">
+                  
+                  {/* <div className="info">
                     <div className="higher-clg">{education.higherCollege}</div>
                     <div className="clg-details">
                       <div className="meta-data">
@@ -195,11 +181,11 @@ export default function Template1() {
                       <div className="grade">
                         {education?.percentage && <p>Percentage: {education?.percentage}%</p>}
                       </div>
-
                     </div>
-                  </div>
-                  {/* Part 3 */}
-                  <div className="info">
+                  </div> 
+                  
+
+                   {/* <div className="info">
                     <div className="school">{education.school}</div>
                     <div className="school-details">
                       <div className="meta-data">
@@ -216,7 +202,7 @@ export default function Template1() {
                         {education?.percentage2 && <p>Percentage: {education?.percentage2}%</p>}
                       </div>
                     </div>
-                  </div>
+                  </div>  */}
                 </div>
 
                 {/* Skills */}
@@ -288,7 +274,6 @@ export default function Template1() {
                 )}
 
                 {/* Links */}
-
                 <div className="links">
                   <div className="heading">Coding Profile</div>
                   <hr />
@@ -371,26 +356,6 @@ export default function Template1() {
                     </div>
                   </div>
                 </div>
-
-                {/* Core Subjects */}
-
-                <div className="subjects">
-                  <div className="heading">Core Subjects</div>
-                  <hr />
-                  <div className="subject-list">
-                    {/* {extraDetails?.coreSubjects?.map((subject, index) => ( */}
-                    <ul>
-                      {/* <li key={index}>{subject}</li> */}
-                      <li>Data Structures and Algorithms</li>
-                      {/* <li>Object Oriented Programming</li> */}
-                      <li>Database Management System</li>
-                      <li>Operating System</li>
-                    </ul>
-                    {/* ))} */}
-                  </div>
-                </div>
-
-
               </div>
 
               {/* Right section */}
@@ -438,7 +403,7 @@ export default function Template1() {
                         <div key={index}>
                           <div className="project-names">
                             <p>{project.title}</p>
-                            <p id="link-icons"><Link to={project.link}><i class="fa-solid fa-link"></i></Link></p>
+                            <p id="link-icons"><Link to={project.link}><i className="fa-solid fa-link"></i></Link></p>
                           </div>
                           <p id="tech-stacks">{project.techStack}</p>
                           <div className="project-descs">
@@ -461,8 +426,8 @@ export default function Template1() {
                     <hr />
                     <div className="list">
                       {extraDetails?.achievements?.map((achieve, index) => (
-                        <ul>
-                          <li key={index}> {achieve}</li>
+                        <ul key={index}>
+                          <li>{achieve}</li>
                         </ul>
                       ))}
                     </div>
@@ -478,8 +443,8 @@ export default function Template1() {
                       <div className="extra-list">
                         {extraDetails?.extraCoCurricular?.map(
                           (extra, index) => (
-                            <ul>
-                              <li className="value" key={index}>
+                            <ul key={index}>
+                              <li className="value">
                                 {extra}
                               </li>
                             </ul>
@@ -492,7 +457,6 @@ export default function Template1() {
             </div>
           </Box>
         </Paper>
-
 
         <Button
           variant="contained"
@@ -507,49 +471,15 @@ export default function Template1() {
           onClick={handleDownload}
           endIcon={<DownloadIcon />}
           className="download-button"
-          disabled={loading} // Disable button while loading
+          disabled={loading}
         >
-          {loading ? ( // Conditionally render loading indicator
+          {loading ? (
             <CircularProgress size={24} color="inherit" />
           ) : (
             "Download"
           )}
         </Button>
         <Feedback open={open} handleClose={handleClose} />
-
-        {/* <Box sx={{ position: 'relative', top: '-1000px', left: '1160px', width: '100%', }} className='return-links'>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {returnLinks && Object.keys(returnLinks).map((key, index) => (
-              <Link to={returnLinks[key]} key={index} className="return-link">
-                <Button
-                  variant="outlined"
-                  sx={{
-                    margin: "5px", borderRadius: "20px", width: "12rem", backgroundColor: "var(--btn)", color: 'black', '&:hover': { backgroundColor: "var(--btnHover)" },
-                  }}
-                  endIcon={<ArrowForwardIcon />}
-                >
-                  {key}
-                </Button>
-              </Link>
-            ))}
-          </div>
-        </Box> */}
-
-        {/* <Box sx={{ position: 'fixed', top: '100px', left: '10px', width: '100%', zIndex: 999 }} className='return-links'>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {returnLinks && Object.keys(returnLinks).map((key, index) => (
-              <Link to={returnLinks[key]} key={index} className="return-link">
-                <Button
-                  variant="outlined"
-                  sx={{ margin: "5px", borderRadius: "20px", width: "12rem" }}
-                  startIcon={<ArrowBackIcon />}
-                >
-                  {key}
-                </Button>
-              </Link>
-            ))}
-          </div>
-        </Box> */}
       </Box>
     </>
   );

@@ -24,19 +24,19 @@ const educationSchema = new mongoose.Schema({
     startYear: String,
     endYear: String,
     city: String,
-    grades: String,
-    higherCollege: String,
-    startYear2: String,
-    endYear2: String,
-    city2: String,
-    percentage: String,
-    board1: String,
-    school: String,
-    startYear3: String,
-    endYear3: String,
-    city3: String,
-    percentage2: String,
-    board2: String
+    //grades: String,
+    // higherCollege: String,
+    // startYear2: String,
+    // endYear2: String,
+    // city2: String,
+    // percentage: String,
+    // board1: String,
+    // school: String,
+    // startYear3: String,
+    // endYear3: String,
+    // city3: String,
+    // percentage2: String,
+    // board2: String
 });
 
 // Define schema for Project

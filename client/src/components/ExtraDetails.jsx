@@ -103,28 +103,28 @@ const ExtraDetails = () => {
     flexDirection: "column",
   };
 
-  const coresubject = (
-    <div>
-      <p>Core Subjects</p>
-      <ul>
-        <li>
-          Data Structures and Algorithms
-        </li>
-        <li>
-          Operating Systems
-        </li>
-        <li>
-          Database Management Systems
-        </li>
-        <li>
-          Computer Networks  etc.
-        </li>
-        <li>
-          Object Oriented Programming  etc.
-        </li>
-      </ul>
-    </div>
-  )
+  // const coresubject = (
+  //   <div>
+  //     <p>Core Subjects</p>
+  //     <ul>
+  //       <li>
+  //         Data Structures and Algorithms
+  //       </li>
+  //       <li>
+  //         Operating Systems
+  //       </li>
+  //       <li>
+  //         Database Management Systems
+  //       </li>
+  //       <li>
+  //         Computer Networks  etc.
+  //       </li>
+  //       <li>
+  //         Object Oriented Programming  etc.
+  //       </li>
+  //     </ul>
+  //   </div>
+  // )
 
   const handleSave = async () => {
     setLoading(true);
@@ -135,7 +135,7 @@ const ExtraDetails = () => {
       experience: experienceData,
       extraDetails: extraDetailsData,
     };
-    // console.log("resume data: ", resumeData);
+    console.log("resume data: ", resumeData);
     try {
       const response = await axios.post(`${BASE_URL}/data/resume-data?id=${currentUser._id}`, { resumeData }, {
         headers: {
