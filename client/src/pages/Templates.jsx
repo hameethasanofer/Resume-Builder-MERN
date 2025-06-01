@@ -4,12 +4,23 @@ import resume2 from '../assets/resume_template2.jpg';
 import resume3 from '../assets/resume_template3.png';
 import resume4 from '../assets/resume_template4.png';
 import resume5 from '../assets/resume_template5.png';
- // 👈 Import Template 4 image
 
 import { useNavigate } from 'react-router-dom';
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import '../styles/template.css';
+
+const TEMPLATE_WIDTH = 260;
+const TEMPLATE_HEIGHT = 360;
+
+const templateList = [
+    { img: resume1, alt: "Template 1" },
+    { img: resume2, alt: "Template 2" },
+    { img: resume3, alt: "Template 3" },
+    { img: resume4, alt: "Template 4" },
+    { img: resume5, alt: "Template 5" },
+    // Add more templates here as needed
+];
 
 const Templates = () => {
     const [selectedTemplate, setSelectedTemplate] = useState(null);
@@ -28,29 +39,106 @@ const Templates = () => {
     };
 
     return (
-        <div className='container'>
-            <h2 className='heading'>Resume Templates</h2>
-            <div className="template-container">
-                <div onClick={() => handleTemplateClick(resume1)}>
-                    <img className="template" src={resume1} alt="Template 1" width={'280px'} height={'380px'} />
-                    <p onClick={() => handleResumeClick(1)}>Use Template</p>
-                </div>
-                <div onClick={() => handleTemplateClick(resume2)}>
-                    <img className="template" src={resume2} alt="Template 2" width={'280px'} height={'380px'} />
-                    <p onClick={() => handleResumeClick(2)}>Use Template</p>
-                </div>
-                <div onClick={() => handleTemplateClick(resume3)}>
-                    <img className="template" src={resume3} alt="Template 3" width={'280px'} height={'380px'} />
-                    <p onClick={() => handleResumeClick(3)}>Use Template</p>
-                </div>
-                <div onClick={() => handleTemplateClick(resume4)}>
-                    <img className="template" src={resume4} alt="Template 4" width={'280px'} height={'380px'} />
-                    <p onClick={() => handleResumeClick(4)}>Use Template</p>
-                </div>
-                <div onClick={() => handleTemplateClick(resume5)}>
-                    <img className="template" src={resume5} alt="Template 5" width={'280px'} height={'380px'} />
-                    <p onClick={() => handleResumeClick(5)}>Use Template</p>
-                </div>
+        <div
+            className='container'
+            style={{
+                maxWidth: 1400,
+                margin: '0 auto',
+                padding: '32px 16px 64px 16px',
+                minHeight: '100vh',
+                boxSizing: 'border-box',
+                overflowY: 'auto'
+            }}
+        >
+            <h2 className='heading' style={{ textAlign: 'center', marginBottom: 32 }}>Resume Templates</h2>
+            <div
+                className="template-container"
+                style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+                    gap: '32px',
+                    justifyItems: 'center',
+                    alignItems: 'start',
+                    padding: 0,
+                    borderRadius: 0,
+                    boxShadow: 'none',
+                    background: 'none',
+                    minHeight: 'unset'
+                }}
+            >
+                {templateList.map((tpl, idx) => (
+                    <div
+                        key={idx}
+                        onClick={() => handleTemplateClick(tpl.img)}
+                        style={{
+                            width: TEMPLATE_WIDTH,
+                            height: TEMPLATE_HEIGHT + 100, // Fixed height for all cards
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            background: '#fff',
+                            borderRadius: '14px',
+                            boxShadow: '0 2px 12px rgba(0,0,0,0.10)',
+                            cursor: 'pointer',
+                            padding: '18px 12px 24px 12px',
+                            transition: 'box-shadow 0.2s, transform 0.2s',
+                            margin: '0 auto',
+                            boxSizing: 'border-box',
+                            overflow: 'hidden'
+                        }}
+                        className="template-card"
+                    >
+                        <img
+                            className="template"
+                            src={tpl.img}
+                            alt={tpl.alt}
+                            width={TEMPLATE_WIDTH}
+                            height={TEMPLATE_HEIGHT}
+                            style={{
+                                objectFit: 'cover',
+                                borderRadius: '8px',
+                                boxShadow: '0 1px 8px rgba(0,0,0,0.08)',
+                                marginBottom: 12,
+                                background: '#eee',
+                                width: TEMPLATE_WIDTH,
+                                height: TEMPLATE_HEIGHT,
+                                display: 'block'
+                            }}
+                        />
+                        <div style={{ flexGrow: 1 }} />
+                        <p
+                            style={{
+                                margin: '12px 0 0 0',
+                                color: '#ff8c00',
+                                fontWeight: 600,
+                                fontSize: 16,
+                                letterSpacing: 0.5,
+                                cursor: 'pointer',
+                                textAlign: 'center',
+                                border: '1px solid #ff8c00',
+                                borderRadius: 6,
+                                padding: '6px 0',
+                                width: '100%',
+                                background: '#fff7e2',
+                                transition: 'background 0.2s, color 0.2s'
+                            }}
+                            onClick={e => {
+                                e.stopPropagation();
+                                handleResumeClick(idx + 1);
+                            }}
+                            onMouseOver={e => {
+                                e.target.style.background = '#ff8c00';
+                                e.target.style.color = '#fff';
+                            }}
+                            onMouseOut={e => {
+                                e.target.style.background = '#fff7e2';
+                                e.target.style.color = '#ff8c00';
+                            }}
+                        >
+                            Use Template
+                        </p>
+                    </div>
+                ))}
             </div>
 
             {selectedTemplate && (
@@ -59,7 +147,7 @@ const Templates = () => {
                         <IconButton onClick={handleClose} style={{ position: "absolute", top: "10px", right: "10px" }}>
                             <CloseIcon />
                         </IconButton>
-                        <img src={selectedTemplate} alt="Selected Template" />
+                        <img src={selectedTemplate} alt="Selected Template" style={{ maxWidth: '90vw', maxHeight: '90vh' }} />
                     </div>
                 </div>
             )}
