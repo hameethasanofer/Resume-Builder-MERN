@@ -18,6 +18,7 @@ nav-container {
   margin-right: 10px;
 }
 
+
 .logo {
   margin-right: 10px;
 }
@@ -61,7 +62,7 @@ nav-container {
   left: 0;
   z-index: 100;
   padding-top: 60px;
-  transition: transform 0.3s ease-in-out;
+  /* transition: transform 0.3s ease-in-out; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;

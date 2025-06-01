@@ -10,8 +10,8 @@ import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import '../styles/template.css';
 
-const TEMPLATE_WIDTH = 260;
-const TEMPLATE_HEIGHT = 360;
+const TEMPLATE_WIDTH = 270;
+const TEMPLATE_HEIGHT = 380;
 
 const templateList = [
     { img: resume1, alt: "Template 1" },
@@ -19,7 +19,7 @@ const templateList = [
     { img: resume3, alt: "Template 3" },
     { img: resume4, alt: "Template 4" },
     { img: resume5, alt: "Template 5" },
-    // Add more templates here as needed
+    
 ];
 
 const Templates = () => {
@@ -42,28 +42,26 @@ const Templates = () => {
         <div
             className='container'
             style={{
-                maxWidth: 1400,
+                maxWidth: 1480,
                 margin: '0 auto',
-                padding: '32px 16px 64px 16px',
+                padding: '24px 0 80px 0', // Increased bottom padding
                 minHeight: '100vh',
                 boxSizing: 'border-box',
                 overflowY: 'auto'
             }}
         >
-            <h2 className='heading' style={{ textAlign: 'center', marginBottom: 32 }}>Resume Templates</h2>
+            <h2 className='heading' style={{ textAlign: 'center', marginBottom: 24 }}>Resume Templates</h2>
             <div
                 className="template-container"
                 style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-                    gap: '32px',
+                    gridTemplateColumns: 'repeat(5, 1fr)',
+                    gap: '16px',
                     justifyItems: 'center',
                     alignItems: 'start',
-                    padding: 0,
-                    borderRadius: 0,
-                    boxShadow: 'none',
-                    background: 'none',
-                    minHeight: 'unset'
+                    margin: 0,
+                    padding: '0 4px',
+                    boxSizing: 'border-box',
                 }}
             >
                 {templateList.map((tpl, idx) => (
@@ -72,7 +70,7 @@ const Templates = () => {
                         onClick={() => handleTemplateClick(tpl.img)}
                         style={{
                             width: TEMPLATE_WIDTH,
-                            height: TEMPLATE_HEIGHT + 100, // Fixed height for all cards
+                            height: TEMPLATE_HEIGHT + 90,
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
@@ -80,9 +78,9 @@ const Templates = () => {
                             borderRadius: '14px',
                             boxShadow: '0 2px 12px rgba(0,0,0,0.10)',
                             cursor: 'pointer',
-                            padding: '18px 12px 24px 12px',
+                            padding: '12px 4px 14px 4px',
                             transition: 'box-shadow 0.2s, transform 0.2s',
-                            margin: '0 auto',
+                            margin: 0,
                             boxSizing: 'border-box',
                             overflow: 'hidden'
                         }}
@@ -98,7 +96,7 @@ const Templates = () => {
                                 objectFit: 'cover',
                                 borderRadius: '8px',
                                 boxShadow: '0 1px 8px rgba(0,0,0,0.08)',
-                                marginBottom: 12,
+                                marginBottom: 10,
                                 background: '#eee',
                                 width: TEMPLATE_WIDTH,
                                 height: TEMPLATE_HEIGHT,

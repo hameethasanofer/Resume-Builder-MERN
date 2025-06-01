@@ -78,7 +78,6 @@ const Navbar = () => {
     setActiveButton("");
   };
 
-  // 🔁 Set active button based on current route
   useEffect(() => {
     const sectionRoutes = ["/profile", "/education", "/projects", "/experience", "/extraDetails"];
     if (sectionRoutes.includes(location.pathname)) {
@@ -146,9 +145,17 @@ const Navbar = () => {
           <Typography
             className="logo-text"
             variant="h5"
-            sx={{ flexGrow: 1, marginLeft: "2px", fontWeight: "600", color: "#000" }}
+            sx={{ flexGrow: 1, marginLeft: "2px", fontWeight: "600" }}
           >
-            <Link to="/" style={{ color: "#000", textDecoration: "none" }}>RESUME BUILDER</Link>
+            <Link
+              to="/"
+              style={{
+                color: activeButton === "" ? "#ff8c00" : "#000",
+                textDecoration: "none"
+              }}
+            >
+              RESUME BUILDER
+            </Link>
           </Typography>
 
           {currentUser ? (
@@ -159,23 +166,20 @@ const Navbar = () => {
                   fontWeight: 600,
                   mx: 1,
                   borderRadius: "6px",
-                  backgroundColor: "transparent",
-                  "&:hover": {
-                    color: "#ff8c00",
-                    backgroundColor: "transparent"
-                  }
+                  backgroundColor: "transparent"
                 }}
                 onClick={handleSectionsClick}
               >
                 Sections
               </Button>
+
               <Menu
                 anchorEl={sectionsAnchorEl}
                 open={Boolean(sectionsAnchorEl)}
                 onClose={handleClose}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                PaperProps={{ sx: { backgroundColor: "#ff8c00", color: "#fff" } }}
+                PaperProps={{ sx: { backgroundColor: "#EAE0CB", color: "#000" } }}
               >
                 <MenuItem onClick={() => { navigate('/profile'); handleClose(); }}>Profile</MenuItem>
                 <MenuItem onClick={() => { navigate('/education'); handleClose(); }}>Education</MenuItem>
@@ -190,43 +194,39 @@ const Navbar = () => {
                   fontWeight: 600,
                   mx: 1,
                   borderRadius: "6px",
-                  "&:hover": {
-                    color: "#ff8c00",
-                    backgroundColor: "transparent"
-                  }
+                  backgroundColor: "transparent"
                 }}
                 onClick={handleTemplateClick}
               >
                 Templates
               </Button>
+
               <Button
                 sx={{
                   color: activeButton === "contact" ? "#ff8c00" : "#000",
                   fontWeight: 600,
                   mx: 1,
                   borderRadius: "6px",
-                  "&:hover": {
-                    color: "#ff8c00",
-                    backgroundColor: "transparent"
-                  }
+                  backgroundColor: "transparent"
                 }}
                 onClick={handleContactUsClick}
               >
                 Contact Us
               </Button>
+
               <Button
                 sx={{
                   color: "#fff",
                   fontWeight: 600,
                   backgroundColor: "#ff8c00",
                   borderRadius: "6px",
-                  ml: 1,
-                  "&:hover": { backgroundColor: "#ff7043" }
+                  ml: 1
                 }}
                 onClick={handleLogout}
               >
                 Logout
               </Button>
+
               <Avatar
                 src={currentUser?.avatar}
                 alt="user"
