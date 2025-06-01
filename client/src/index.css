@@ -9,8 +9,8 @@
   --landBtnHover: #ebca37;
   --bgColor: #ffffff;
   --cardBg: #fff;
-  --btn: #a6dae7;
-  --btnHover: #90d4e4;
+  --btn: #eb8e04;
+  --btnHover: #b7e490;
   --text: rgb(211, 237, 220);
 }
 
@@ -22,12 +22,7 @@ body {
   height: 100%; */
   /* background-color: #ffecd6; */
   background-image: radial-gradient(
-    circle,
-    #f9f8e3,
-    #dcf0db,
-    #bde7de,
-    #a6dce6,
-    #a3cceb
+    #F4F4F4
   );
   color: #333333; /* Apply primary text color */
   font-family: "Roboto", sans-serif; /* Ensure consistent font family */

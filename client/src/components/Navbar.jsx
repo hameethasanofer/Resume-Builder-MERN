@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Avatar, Menu, MenuItem, IconButton, Drawer, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import {
+  Button,
+  Avatar,
+  Menu,
+  MenuItem,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText
+} from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import EditIcon from '@mui/icons-material/Edit';
-import DescriptionIcon from '@mui/icons-material/Description';
-import LogoutIcon from '@mui/icons-material/Logout';
 import logo from "../assets/profile.png";
 import { logoutUser } from "../redux/userSlice";
 import { clearEducation } from "../redux/educationSlice";
@@ -24,14 +33,9 @@ import { clearProfile } from "../redux/profileSlice";
 const Navbar = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
   const [sectionsAnchorEl, setSectionsAnchorEl] = useState(null);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleSectionsClick = (event) => {
     setSectionsAnchorEl(event.currentTarget);
@@ -39,20 +43,17 @@ const Navbar = () => {
 
   const handleProfileClick = () => {
     navigate('/user-profile');
-    setAnchorEl(null);
   };
 
   const handleContactUsClick = () => {
     navigate('/contact-us');
-    setAnchorEl(null);
   };
+
   const handleTemplateClick = () => {
     navigate('/templates');
-    setAnchorEl(null);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
     setSectionsAnchorEl(null);
     setIsDrawerOpen(false);
   };
@@ -75,136 +76,162 @@ const Navbar = () => {
     dispatch(clearExperience());
     dispatch(clearExtraDetails());
   };
-  // console.log(currentUser);
+
   return (
-    <nav className="nav-container">
-      <AppBar position="static" style={{ backgroundColor: 'var(--bgColor)', color: 'black', }}>
-        <Toolbar>
-          <div className="menu-icon">
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              onClick={() => setIsDrawerOpen(true)}
+    <>
+      <nav className="nav-container">
+        <AppBar
+          position="static"
+          sx={{
+            backgroundColor: "#fff7e2", // Light orange
+            color: "#000",
+            boxShadow: "none",
+            minHeight: "80px", // Increased height
+            justifyContent: "center"
+          }}
+        >
+          <Toolbar sx={{ minHeight: "80px" }}>
+            {/* Menu Icon for Drawer */}
+            <div className="menu-icon">
+              <IconButton
+                edge="start"
+                sx={{ color: "#000" }}
+                aria-label="menu"
+                onClick={() => setIsDrawerOpen(true)}
+              >
+                <MenuIcon />
+              </IconButton>
+            </div>
+
+            {/* Drawer */}
+            
+            <Drawer
+              anchor="left"
+              open={isDrawerOpen}
+              onClose={() => setIsDrawerOpen(false)}
+              PaperProps={{
+                sx: { backgroundColor: "#ffab40", color: "#000" }
+              }}
             >
-              <MenuIcon />
-            </IconButton>
-          </div>
-          <Drawer
-            anchor="left"
-            open={isDrawerOpen}
-            onClose={() => setIsDrawerOpen(false)}
-          >
-            {currentUser !== null ? (
-              <>
+              {currentUser !== null ? (
                 <List>
                   <ListItem button component={Link} to="/" onClick={handleClose}>
-                    <ListItemIcon>
-                      <HomeIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Home" />
+                    <ListItemIcon sx={{ color: "#ff8c00" }}><HomeIcon /></ListItemIcon> {/* Changed to #ff8c00 */}
+                    <ListItemText primary="Home" primaryTypographyProps={{ sx: { color: "#000" } }} />
                   </ListItem>
                   <ListItem button component={Link} to="/profile" onClick={handleClose}>
-                    <ListItemIcon>
-                      <EditIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Edit Resume" />
-                  </ListItem>
-                  <ListItem button component={Link} to="/templates" onClick={handleClose}>
-                    <ListItemIcon>
-                      <DescriptionIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Templates" />
-                  </ListItem>
-                  <ListItem button onClick={handleLogout} >
-                    <ListItemIcon>
-                      <LogoutIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Logout" />
+                    <ListItemIcon sx={{ color: "#ff8c00" }}><EditIcon /></ListItemIcon> {/* Changed to #ff8c00 */}
+                    <ListItemText primary="Edit Resume" primaryTypographyProps={{ sx: { color: "#000" } }} />
                   </ListItem>
                 </List>
+              ) : (
+                <div className="drawer-div p-4">
+                  <h3 className="text-[#ff8c00] font-bold">Login Please!</h3>
+                </div>
+              )}
+            </Drawer>
+
+
+            {/* Logo and Title */}
+            <img className="logo" src={logo} alt="resume" width={"40px"} height={"40px"} />
+            <Typography
+              className="logo-text"
+              variant="h5"
+              component="div"
+              sx={{
+                flexGrow: 1,
+                marginLeft: "2px",
+                fontWeight: "600",
+                color: "#000"
+              }}
+            >
+              <Link to={'/'} className="resume-builder-link" style={{ color: "#000", textDecoration: "none" }}>RESUME BUILDER</Link>
+            </Typography>
+
+            {/* Right Side of Navbar */}
+            {currentUser ? (
+              <>
+                {/* Sections Dropdown */}
+                <Button sx={{ color: "#000", fontWeight: 600 }} onClick={handleSectionsClick}>
+                  Sections
+                </Button>
+                <Menu
+                  anchorEl={sectionsAnchorEl}
+                  open={Boolean(sectionsAnchorEl)}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  PaperProps={{
+                    sx: { backgroundColor: "#ffccbc", color: "#ff8c00" }
+                  }}
+                >
+                  <MenuItem onClick={() => { navigate('/profile'); handleClose(); }} sx={{ color: "#000" }}>Profile</MenuItem>
+                  <MenuItem onClick={() => { navigate('/education'); handleClose(); }} sx={{ color: "#000" }}>Education</MenuItem>
+                  <MenuItem onClick={() => { navigate('/projects'); handleClose(); }} sx={{ color: "#000" }}>Projects</MenuItem>
+                  <MenuItem onClick={() => { navigate('/experience'); handleClose(); }} sx={{ color: "#000" }}>Experience</MenuItem>
+                  <MenuItem onClick={() => { navigate('/extraDetails'); handleClose(); }} sx={{ color: "#000" }}>Extra Details</MenuItem>
+                </Menu>
+
+                {/* Direct Buttons in Navbar */}
+                <Button sx={{ color: "#000", fontWeight: 600 }} onClick={handleTemplateClick}>Templates</Button>
+                <Button sx={{ color: "#000", fontWeight: 600 }} onClick={handleContactUsClick}>Contact Us</Button>
+                <Button
+                  sx={{
+                    color: "#fff",
+                    fontWeight: 600,
+                    backgroundColor: "#FF6F00", // Orange background
+                    borderRadius: "6px",
+                    ml: 1,
+                    "&:hover": { backgroundColor: "#FFA500" }
+                  }}
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+
+                {/* Avatar */}
+                <div className="avatar-container">
+                  <Avatar
+                    src={currentUser?.avatar}
+                    alt="user"
+                    className="avatar"
+                    onClick={handleProfileClick}
+                    sx={{
+                      cursor: "pointer",
+                      ml: 2,
+                      bgcolor: "#fff"
+                    }}
+                  />
+                </div>
               </>
             ) : (
-              <>
-                <div className="drawer-div">
-                  <h3>Login Please!</h3>
-                </div>
-              </>)}
-          </Drawer>
-
-          <img className="logo" src={logo} alt="resume" width={"40px"} height={"40px"} />
-          <Typography
-            className="logo-text"
-            variant="h5"
-            component="div"
-            sx={{
-              flexGrow: 1,
-              marginLeft: "2px",
-              fontWeight: "600",
-            }}
-          >
-            <Link to={'/'} className="resume-builder-link"> RESUME BUILDER</Link>
-          </Typography>
-
-          {currentUser ? (
-            <>
-              <Button color="inherit" onClick={handleSectionsClick}>
-                Sections
-              </Button>
-              <Menu
-                anchorEl={sectionsAnchorEl}
-                open={Boolean(sectionsAnchorEl)}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-              >
-                <MenuItem onClick={() => { navigate('/profile'); handleClose(); }}>Profile</MenuItem>
-                <MenuItem onClick={() => { navigate('/education'); handleClose(); }}>Education</MenuItem>
-                <MenuItem onClick={() => { navigate('/projects'); handleClose(); }}>Projects</MenuItem>
-                <MenuItem onClick={() => { navigate('/experience'); handleClose(); }}>Experience</MenuItem>
-                <MenuItem onClick={() => { navigate('/extraDetails'); handleClose(); }}>Extra Details</MenuItem>
-              </Menu>
-              <div className="avatar-container">
-                <Avatar
-                  src={currentUser?.avatar}
-                  alt="user"
-                  className="avatar"
-                  onClick={handleClick}
-                />
-              </div>
-              <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-              >
-                <MenuItem onClick={handleProfileClick}>My Profile</MenuItem>
-                <MenuItem onClick={handleTemplateClick}>Templates</MenuItem>
-                <MenuItem onClick={handleContactUsClick}>Contact Us</MenuItem>
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-              </Menu>
-            </>
-          ) : (
-            <Link to={'/sign-in'} className="login-link">
-              <Button color="inherit">Login</Button>
-            </Link>
-          )}
-        </Toolbar>
-      </AppBar>
-    </nav>
+              <Link to={'/sign-in'} className="login-link">
+                <Button sx={{ color: "#000", fontWeight: 600 }}>Login</Button>
+              </Link>
+            )}
+          </Toolbar>
+        </AppBar>
+      </nav>
+      {/* Footer */}
+      {/* <footer className="w-full bg-[#ffab40] text-black py-2 fixed bottom-0 left-0 z-50">
+  <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
+    <div className="text-center md:text-left text-xs font-semibold">
+      © {new Date().getFullYear()} Resume Builder. All rights reserved.
+    </div>
+    <div className="flex space-x-4 mt-2 md:mt-0 text-xs">
+      <Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link>
+      <Link to="/terms" className="hover:underline">Terms of Service</Link>
+      <Link to="/contact-us" className="hover:underline">Contact</Link>
+    </div>
+  </div>
+</footer> */}
+    </>
   );
 };
 

@@ -21,6 +21,8 @@ import Experience from './components/Experience';
 import ExtraDetails from './components/ExtraDetails';
 import ResumeLayout from './components/ResumeLayout';
 import ErrorPage from './pages/ErrorPage';
+import Footer from './components/Footer';
+
 // import Demo from './pages/Demo';
 
 
@@ -51,6 +53,7 @@ function App() {
                 <Route path='*' element={<ErrorPage />} />
               </Route>
             </Routes>
+            <Footer />
           </BrowserRouter>
           <ToastContainer />
         </PersistGate>

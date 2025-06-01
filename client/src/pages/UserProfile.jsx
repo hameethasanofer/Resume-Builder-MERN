@@ -116,8 +116,8 @@ export default function UserProfile() {
   const sidebarLinks = [
     { text: 'Home', path: '/', icon: <HomeIcon /> },
     { text: 'Edit Resume', path: '/profile', icon: <EditIcon /> },
-    { text: 'Templates', path: '/templates', icon: <TemplateIcon /> },
-    { text: 'Logout', path: '', icon: <LogoutIcon />, action: handleLogout },
+    // { text: 'Templates', path: '/templates', icon: <TemplateIcon /> },
+    // { text: 'Logout', path: '', icon: <LogoutIcon />, action: handleLogout },
   ];
 
   const toggleDrawer = (open) => (event) => {
@@ -204,9 +204,12 @@ export default function UserProfile() {
                   onClick={link.text === 'Logout' ? link.action : null}
                 >
                   <ListItem button>
-                    <ListItemIcon className='icon'>{link.icon}</ListItemIcon>
-                    <ListItemText primary={link.text} />
-                  </ListItem>
+                  <ListItemIcon sx={{ color: '#FF6F00' }}>
+                    {link.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={link.text} />
+                </ListItem>
+
                 </Link>
               ))}
             </Box>
@@ -263,25 +266,28 @@ export default function UserProfile() {
                 value={formData.password}
               />
               <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{
-                  mt: 3,
-                  mb: 2,
-                  backgroundColor: "var(--btn)",
-                  color: "black",
-                  "&:hover": { backgroundColor: "var(--btnHover)" },
-                }}
-                onClick={handleSubmit}
-                disabled={loading} // Disable button while loading
-              >
-                {loading ? ( // Conditionally render loading indicator
-                  <CircularProgress size={24} color="inherit" />
-                ) : (
-                  "Update"
-                )}
-              </Button>
+  type="submit"
+  fullWidth
+  variant="contained"
+  sx={{
+    mt: 3,
+    mb: 2,
+    backgroundColor: "#FF6F00", // Set default color to orange
+    color: "white",             // Text color
+    "&:hover": {
+      backgroundColor: "#FF6F00", // Darker orange on hover (optional)
+    },
+  }}
+  onClick={handleSubmit}
+  disabled={loading}
+>
+  {loading ? (
+    <CircularProgress size={24} color="inherit" />
+  ) : (
+    "Update"
+  )}
+</Button>
+
             </Box>
           </Box>
         </Grid>
