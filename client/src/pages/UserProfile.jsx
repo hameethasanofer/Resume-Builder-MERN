@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../redux/userSlice';
@@ -7,8 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import {
   Avatar, Box, Button, Container, Grid, IconButton, List, ListItem, ListItemIcon,
-  ListItemText, TextField, Typography, AppBar, Toolbar, Drawer,
-  CircularProgress
+  ListItemText, TextField, Typography, Toolbar, Drawer, CircularProgress
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
@@ -45,14 +43,12 @@ export default function UserProfile() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    // console.log(formData);
     try {
       const response = await axios.put(`${BASE_URL}/user/update/${currentUser._id}`, formData, {
         headers: {
           authorization: currentUser.token,
         },
       });
-      // console.log(response.data);
       toast.success("Profile Updated Successfully!", {
         position: "top-left",
         autoClose: 1500,
@@ -69,7 +65,6 @@ export default function UserProfile() {
       console.error(error);
       setLoading(false);
     }
-
   };
 
   const getUser = async () => {
@@ -79,7 +74,6 @@ export default function UserProfile() {
           authorization: currentUser.token,
         },
       });
-      // console.log(response.data);
       setFormData({
         username: response.data.username,
       });
@@ -90,8 +84,8 @@ export default function UserProfile() {
 
   useEffect(() => {
     getUser();
+    // eslint-disable-next-line
   }, []);
-
 
   const handleLogout = async () => {
     dispatch(logoutUser());
@@ -120,77 +114,12 @@ export default function UserProfile() {
     // { text: 'Logout', path: '', icon: <LogoutIcon />, action: handleLogout },
   ];
 
-  const toggleDrawer = (open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-    setIsDrawerOpen(open);
-  };
-
-  const drawer = (
-    <Box
-      sx={{ width: 250 }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
-      {currentUser ? (
-        <>
-          <List>
-            {sidebarLinks.map((link, index) => (
-              <Link
-                key={index}
-                className="sidebar-link"
-                to={link.path}
-                onClick={link.text === 'Logout' ? link.action : null}
-              >
-                <ListItem button>
-                  <ListItemIcon className='icon'>{link.icon}</ListItemIcon>
-                  <ListItemText primary={link.text} />
-                </ListItem>
-              </Link>
-            ))}
-          </List>
-        </>
-      ) : (
-        <>
-          <div className="drawer-div">
-            <h3>Login Please!</h3>
-          </div>
-        </>
-      )}
-    </Box>
-  );
-
+  // Remove responsive: always show sidebar, never show Drawer
   return (
     <Container component="main" maxWidth="lg">
-      {/* <AppBar position="fixed" style={{ backgroundColor: 'var(--bgColor)', color: 'black', }}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={toggleDrawer(true)}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            User Profile
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
       <Toolbar />
-      <Drawer
-        anchor="left"
-        open={isDrawerOpen}
-        onClose={toggleDrawer(false)}
-        sx={{ display: { xs: 'block', sm: 'none' } }}
-      >
-        {drawer}
-      </Drawer>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={3} sx={{ display: { xs: 'none', sm: 'block' } }}>
+        <Grid item xs={12}  md={3}>
           <Box className="sidebar">
             <Typography variant="h6" align="center" sx={{ marginTop: 4 }}>
               Menu
@@ -204,18 +133,17 @@ export default function UserProfile() {
                   onClick={link.text === 'Logout' ? link.action : null}
                 >
                   <ListItem button>
-                  <ListItemIcon sx={{ color: '#FF6F00' }}>
-                    {link.icon}
-                  </ListItemIcon>
-                  <ListItemText primary={link.text} />
-                </ListItem>
-
+                    <ListItemIcon sx={{ color: '#FF6F00' }}>
+                      {link.icon}
+                    </ListItemIcon>
+                    <ListItemText primary={link.text} />
+                  </ListItem>
                 </Link>
               ))}
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={9}>
+        <Grid item xs={12} md={9}>
           <Box
             sx={{
               display: 'flex',
@@ -248,7 +176,6 @@ export default function UserProfile() {
                 required
                 fullWidth
                 id="email"
-                // label="Email Address"
                 name="email"
                 onChange={handleChange}
                 value={formData.email}
@@ -266,28 +193,27 @@ export default function UserProfile() {
                 value={formData.password}
               />
               <Button
-  type="submit"
-  fullWidth
-  variant="contained"
-  sx={{
-    mt: 3,
-    mb: 2,
-    backgroundColor: "#FF6F00", // Set default color to orange
-    color: "white",             // Text color
-    "&:hover": {
-      backgroundColor: "#FF6F00", // Darker orange on hover (optional)
-    },
-  }}
-  onClick={handleSubmit}
-  disabled={loading}
->
-  {loading ? (
-    <CircularProgress size={24} color="inherit" />
-  ) : (
-    "Update"
-  )}
-</Button>
-
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  backgroundColor: "#FF6F00",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#FF6F00",
+                  },
+                }}
+                onClick={handleSubmit}
+                disabled={loading}
+              >
+                {loading ? (
+                  <CircularProgress size={24} color="inherit" />
+                ) : (
+                  "Update"
+                )}
+              </Button>
             </Box>
           </Box>
         </Grid>

@@ -78,15 +78,15 @@ const Contact = () => {
             <h3 className="text-3xl font-semibold mb-4 text-orange-600">Our Partners</h3>
             <ul className="space-y-3 text-lg text-gray-700">
               <li className="flex items-center gap-3">
-                <span className="w-4 h-4 bg-orange-500 rounded-full inline-block"></span>
+                <span className="w-6 h-6 bg-orange-500 rounded-full inline-block"></span>
                 Partner One - Innovative Tech Solutions
               </li>
               <li className="flex items-center gap-3">
-                <span className="w-4 h-4 bg-orange-500 rounded-full inline-block"></span>
+                <span className="w-6 h-6 bg-orange-500 rounded-full inline-block"></span>
                 Partner Two - Creative Marketing Co.
               </li>
               <li className="flex items-center gap-3">
-                <span className="w-4 h-4 bg-orange-500 rounded-full inline-block"></span>
+                <span className="w-6 h-6 bg-orange-500 rounded-full inline-block"></span>
                 Partner Three - Reliable IT Services
               </li>
             </ul>
@@ -101,6 +101,7 @@ const Contact = () => {
               <label className="block text-lg font-medium text-gray-700">Name</label>
               <input
                 type="text"
+                placeholder="John hoe"
                 required
                 className="w-full border border-gray-300 rounded-lg px-5 py-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-orange-300"
               />
@@ -109,6 +110,7 @@ const Contact = () => {
               <label className="block text-lg font-medium text-gray-700">Email</label>
               <input
                 type="email"
+                placeholder="JohnHoe@gmail.com"
                 required
                 className="w-full border border-gray-300 rounded-lg px-5 py-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-orange-300"
               />
@@ -117,6 +119,7 @@ const Contact = () => {
               <label className="block text-lg font-medium text-gray-700">Message</label>
               <textarea
                 required
+                placeholder="Type your message here.."
                 rows="5"
                 className="w-full border border-gray-300 rounded-lg px-5 py-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-orange-300"
               ></textarea>

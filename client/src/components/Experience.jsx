@@ -74,7 +74,7 @@ const Experience = () => {
       <Card>
         <CardHeader
           title={
-            <Typography variant="h5" align="center" fontWeight="bold">
+            <Typography variant="h5" align="center" fontWeight="bold" className="text-[#FF6F00]">
               Experience Details
             </Typography>
           }
@@ -214,7 +214,7 @@ const Experience = () => {
         <Button
           variant="contained"
           sx={{
-            marginTop: "8px", backgroundColor: "var(--btn)", color: 'black', '&:hover': { backgroundColor: "var(--btnHover)" },
+            marginTop: "8px", backgroundColor: "#FF6F00", color: 'white', '&:hover': { backgroundColor: "#FF6F00" },
             float: 'right'
           }}
           onClick={handleAddExperience}
@@ -226,12 +226,12 @@ const Experience = () => {
       <Grid container spacing={2} alignItems="center" lg={12} >
         <Grid item md={12} sm={12} xs={12} lg={12} style={containerStyles}>
           <Link to={'/projects'} style={linkStyle}>
-            <ArrowBackIcon style={iconStyle} />
-            <h4>Project Section</h4>
+            <ArrowBackIcon style={iconStyle} sx={{ color: '#FF6F00' }}/>
+            <h4 className="text-[#FF6F00]">Project Section</h4>
           </Link>
           <Link to={'/extraDetails'} style={linkStyle}>
-            <h4>ExtraDetails Section</h4>
-            <ArrowForwardIcon style={iconStyle} />
+            <h4 className="text-[#FF6F00]">ExtraDetails Section</h4>
+            <ArrowForwardIcon style={iconStyle} sx={{ color: '#FF6F00' }}/>
           </Link>
         </Grid>
       </Grid>

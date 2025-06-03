@@ -50,7 +50,7 @@ const Templates = () => {
                 overflowY: 'auto'
             }}
         >
-            <h2 className='heading' style={{ textAlign: 'center', marginBottom: 24 }}>Resume Templates</h2>
+            <h2 className='heading ' style={{ textAlign: 'center', marginBottom: 24 ,color:'#FF6F00'}}>Resume Templates</h2>
             <div
                 className="template-container"
                 style={{

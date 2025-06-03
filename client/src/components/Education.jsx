@@ -9,12 +9,12 @@ import {
   MenuItem,
   TextField,
   Typography,
+  Menu,
 } from "@mui/material";
 import EventIcon from "@mui/icons-material/Event";
 import SchoolIcon from "@mui/icons-material/School";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import GradeIcon from "@mui/icons-material/Grade";
-
 import { useDispatch, useSelector } from "react-redux";
 import { updateEducation } from "../redux/educationSlice";
 import { Link } from 'react-router-dom';
@@ -24,616 +24,249 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const Education = () => {
   const dispatch = useDispatch();
   const education = useSelector((state) => state.educationDetails);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [fieldType, setFieldType] = useState(""); // 'year', 'startYear', 'endYear'
 
-  // const handleChange = (event) => {
-  //   const { name, value } = event.target;
-  //   dispatch(updateEducation({ [name]: value }));
-  // };
+  const years = Array.from({ length: 30 }, (_, index) => 2030 - index);
+
+  const openMenu = (event, type) => {
+    setAnchorEl(event.currentTarget);
+    setFieldType(type);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setFieldType("");
+  };
+
+  const handleYearSelect = (field, value) => {
+    dispatch(updateEducation({ ...education, [field]: value }));
+    handleClose();
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     dispatch(updateEducation({ ...education, [name]: value }));
   };
 
+  const FOOTER_HEIGHT = 64; // px
 
-  const containerStyle = {
-    marginTop: "30",
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "column",
-  };
-
-  const years = Array.from({ length: 30 }, (_, index) => 2030 - index);
-
-  const engineeringFields = [
-    "CS",
-    "IT",
-    "EnTC",
-    "Electrical",
-    "Mechanical",
-    "Civil",
-    "Chemical",
-  ];
-  const otherFields = ["E.tech", "B.Tech", "ICT", "AQT", "ANS", "M.Tech"];
-
-  const higherCollegeBoard = ["Maharashtra State Board", "CBSE", "ICSE", "Diploma"];
-  const schoolBoard = ["Maharashtra State Board", "CBSE", "ICSE"];
+const containerStyle = {
+  marginTop: "30px",
+  display: "flex",
+  justifyContent: "center",
+  flexDirection: "column",
+  paddingBottom: `${FOOTER_HEIGHT + 24}px`, // Add enough space for the fixed footer
+};
 
   return (
     <div style={containerStyle}>
-      <Card>
+      <Card elevation={0} sx={{ boxShadow: "none", marginBottom: 4 }}>
         <CardHeader
           title={
-            <Typography variant="h5" align="center" fontWeight="bold">
+            <Typography variant="h5" align="center" fontWeight="bold" className="text-[#ff8c00]">
               Educational Details
             </Typography>
           }
         />
       </Card>
       <CardContent>
-        <div>
-          {/* College Details */}
-          <Grid container spacing={1} alignItems="center" lg={12} >
-            <div>
-              <Typography variant="h6" align="left">
-                College/University Details
-              </Typography>
-            </div>
-            {/* Row 1 */}
-            <Grid container spacing={1} alignItems="center" lg={12} mb={2}>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  margin="dense"
-                  variant="outlined"
-                  type="text"
-                  name="college"
-                  label="College Name"
-                  style={{ width: "100%" }}
-                  required
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <SchoolIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={education.college}
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-               <TextField
-                  select
-                  margin="dense"
-                  variant="outlined"
-                  name="Year"
-                  label="Year"
-                  style={{ width: "100%" }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <EventIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={education.startYear}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="" disabled>
-                    Select Year
-                  </MenuItem>
-                  {years.map((year) => (
-                    <MenuItem key={year} value={year}>
-                      {year}
-                    </MenuItem>
-                  ))}
-                  <MenuItem value="">Clear Selection</MenuItem>
-                </TextField>
-              </Grid>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  margin="dense"
-                  variant="outlined"
-                  type="text"
-                  name="field"
-                  label="Field"
-                  style={{ width: "100%" }}
-                  required
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <SchoolIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={education.field}
-                  onChange={handleChange}
-                />
-              </Grid>
-            </Grid>
-            {/* Row 2 */}
-            <Grid container spacing={1} alignItems="center" lg={12} mb={2}>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  margin="dense"
-                  variant="outlined"
-                  type="text"
-                  name="branch"
-                  label="branch"
-                  style={{ width: "100%" }}
-                  required
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        {/* <IconButton>
-                          <SchoolIcon />
-                        </IconButton> */}
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={education.branch}
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  select
-                  margin="dense"
-                  variant="outlined"
-                  name="startYear"
-                  label="Start Year"
-                  style={{ width: "100%" }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <EventIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={education.startYear}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="" disabled>
-                    Select Year
-                  </MenuItem>
-                  {years.map((year) => (
-                    <MenuItem key={year} value={year}>
-                      {year}
-                    </MenuItem>
-                  ))}
-                  <MenuItem value="">Clear Selection</MenuItem>
-                </TextField>
-              </Grid>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  select
-                  margin="dense"
-                  variant="outlined"
-                  name="endYear"
-                  label="End Year"
-                  style={{ width: "100%" }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <EventIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={education.endYear}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="" disabled>
-                    Select Year
-                  </MenuItem>
-                  {years.map((year) => (
-                    <MenuItem key={year} value={year}>
-                      {year}
-                    </MenuItem>
-                  ))}
-                  <MenuItem value="">Clear Selection</MenuItem>
-                </TextField>
-              </Grid>
-            </Grid>
-            {/* Row 3 */}
-            <Grid container spacing={1} alignItems="center" lg={12} mb={2}>
-              <Grid item md={6} sm={12} xs={12} lg={6}>
-                <TextField
-                  margin="dense"
-                  variant="outlined"
-                  name="city"
-                  label="City"
-                  style={{ width: "100%" }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <LocationCityIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={education.city}
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item md={6} sm={12} xs={12} lg={6}>
-                <TextField
-                  margin="dense"
-                  variant="outlined"
-                  name="grades"
-                  label="CGPA"
-                  style={{ width: "100%" }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <GradeIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={education.grades}
-                  onChange={handleChange}
-                />
-              </Grid>
-            </Grid>
+        <Grid container spacing={2} alignItems="center">
+          {/* College Name */}
+          <Grid item md={6} xs={12}>
+            <TextField
+              margin="dense"
+              variant="outlined"
+              name="college"
+              label="College Name"
+              style={{ width: "100%" }}
+              required
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton><SchoolIcon /></IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              value={education.college || ""}
+              onChange={handleChange}
+            />
           </Grid>
-          {/* 12th Details 
-          <Grid container spacing={1} alignItems="center" lg={12} mt={2}>
-            <div>
-              <Typography variant="h6" align="left">
-                Higher secondary education (12th) Details
-              </Typography>
-            </div>
-            
-            <Grid container spacing={1} alignItems="center" lg={12}>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  margin="dense"
-                  variant="outlined"
-                  type="text"
-                  name="higherCollege"
-                  label="College Name"
-                  style={{ width: "100%" }}
-                  required
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <SchoolIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={education.higherCollege}
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  select
-                  margin="dense"
-                  variant="outlined"
-                  name="startYear2"
-                  label="Start Year"
-                  style={{ width: "100%" }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <EventIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={education.startYear2}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="" disabled>
-                    Select Year
-                  </MenuItem>
-                  {years.map((year) => (
-                    <MenuItem key={year} value={year}>
-                      {year}
-                    </MenuItem>
-                  ))}
-                  <MenuItem value="">Clear Selection</MenuItem> {/* Add this line 
-                </TextField>
-              </Grid>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  select
-                  margin="dense"
-                  variant="outlined"
-                  name="endYear2"
-                  label="End Year"
-                  style={{ width: "100%" }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <EventIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={education.endYear2}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="" disabled>
-                    Select Year
-                  </MenuItem>
-                  {years.map((year) => (
-                    <MenuItem key={year} value={year}>
-                      {year}
-                    </MenuItem>
-                  ))}
-                  <MenuItem value="">Clear Selection</MenuItem> {/* Add this line 
-                </TextField>
-              </Grid>
-            </Grid>
-            {/* Row 2 
-            <Grid container spacing={1} alignItems="center" lg={12}>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  margin="dense"
-                  variant="outlined"
-                  type="text"
-                  name="city2"
-                  label="City"
-                  style={{ width: "100%" }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <LocationCityIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={education.city2}
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  margin="dense"
-                  variant="outlined"
-                  type="text"
-                  name="percentage"
-                  label="Percentage"
-                  style={{ width: "100%" }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <GradeIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={education.percentage}
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  select
-                  margin="dense"
-                  variant="outlined"
-                  name="board1"
-                  placeholder="Select Board"
-                  label="Select Board"
-                  style={{ width: "100%" }}
-                  required
-                  value={education.board1}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="" disabled>
-                    Select Board
-                  </MenuItem>
-                  {higherCollegeBoard.map((field) => (
-                    <MenuItem key={field} value={field}>
-                      {field}
-                    </MenuItem>
-                  ))}
-                  <MenuItem value="">Clear Selection</MenuItem> {/* Add this line 
-                </TextField>
-              </Grid>
-            </Grid>
+
+          {/* Year (Custom Dropdown) */}
+          <Grid item md={6} xs={12}>
+            <TextField
+              label="Year"
+              value={education.year || ""}
+              onClick={(e) => openMenu(e, "year")}
+              InputProps={{
+                readOnly: true,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton><EventIcon /></IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              fullWidth
+              margin="dense"
+            />
           </Grid>
-          */}
 
+          {/* Field */}
+          <Grid item md={6} xs={12}>
+            <TextField
+              margin="dense"
+              variant="outlined"
+              name="field"
+              label="Field"
+              style={{ width: "100%" }}
+              required
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton><SchoolIcon /></IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              value={education.field || ""}
+              onChange={handleChange}
+            />
+          </Grid>
 
-          {/*10th Details 
-          <Grid container spacing={1} alignItems="center" lg={12} mt={2}>
-            <div>
-              <Typography variant="h6" align="left">
-                Secondary education (10th) Details
-              </Typography>
-            </div>
-              
-            <Grid container spacing={1} alignItems="center" lg={12}>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  margin="dense"
-                  variant="outlined"
-                  type="text"
-                  name="school"
-                  label="School Name"
-                  style={{ width: "100%" }}
-                  value={education.school}
-                  required
-                  onChange={handleChange}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <SchoolIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  select
-                  margin="dense"
-                  variant="outlined"
-                  name="startYear3"
-                  label="Start Year"
-                  style={{ width: "100%" }}
-                  onChange={handleChange}
-                  value={education.startYear3}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <EventIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                >
-                  <MenuItem value="" disabled>
-                    Select Year
-                  </MenuItem>
-                  {years.map((year) => (
-                    <MenuItem key={year} value={year}>
-                      {year}
-                    </MenuItem>
-                  ))}
-                  <MenuItem value="">Clear Selection</MenuItem> 
-                </TextField>
-              </Grid>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  select
-                  margin="dense"
-                  variant="outlined"
-                  name="endYear3"
-                  label="End Year"
-                  style={{ width: "100%" }}
-                  value={education.endYear3}
-                  onChange={handleChange}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <EventIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                >
-                  <MenuItem value="" disabled>
-                    Select Year
-                  </MenuItem>
-                  {years.map((year) => (
-                    <MenuItem key={year} value={year}>
-                      {year}
-                    </MenuItem>
-                  ))}
-                  <MenuItem value="">Clear Selection</MenuItem>  
-                </TextField>
-              </Grid>
-            </Grid>
-            
-            <Grid container spacing={1} alignItems="center" lg={12}>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  margin="dense"
-                  variant="outlined"
-                  type="text"
-                  name="city3"
-                  label="City"
-                  style={{ width: "100%" }}
-                  value={education.city3}
-                  onChange={handleChange}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <LocationCityIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  margin="dense"
-                  variant="outlined"
-                  type="text"
-                  name="percentage2"
-                  label="Percentage"
-                  style={{ width: "100%" }}
-                  value={education.percentage2}
-                  onChange={handleChange}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <GradeIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-              <Grid item md={4} sm={12} xs={12} lg={4}>
-                <TextField
-                  select
-                  margin="dense"
-                  variant="outlined"
-                  name="board2"
-                  placeholder="Select Board"
-                  label="Select Board"
-                  style={{ width: "100%" }}
-                  required
-                  value={education.board2}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="" disabled>
-                    Select Board
-                  </MenuItem>
-                  {schoolBoard.map((field) => (
-                    <MenuItem key={field} value={field}>
-                      {field}
-                    </MenuItem>
-                  ))}
-                  <MenuItem value="">Clear Selection</MenuItem> 
-                </TextField>
-              </Grid>
-            </Grid>
-          </Grid> */}
-          
-        </div>
+          {/* Branch */}
+          <Grid item md={6} xs={12}>
+            <TextField
+              margin="dense"
+              variant="outlined"
+              name="branch"
+              label="Branch"
+              style={{ width: "100%" }}
+              required
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton><SchoolIcon /></IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              value={education.branch || ""}
+              onChange={handleChange}
+            />
+          </Grid>
+
+          {/* Start Year */}
+          <Grid item md={6} xs={12}>
+            <TextField
+              label="Start Year"
+              value={education.startYear || ""}
+              onClick={(e) => openMenu(e, "startYear")}
+              InputProps={{
+                readOnly: true,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton><EventIcon /></IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              fullWidth
+              margin="dense"
+            />
+          </Grid>
+
+          {/* End Year */}
+          <Grid item md={6} xs={12}>
+            <TextField
+              label="End Year"
+              value={education.endYear || ""}
+              onClick={(e) => openMenu(e, "endYear")}
+              InputProps={{
+                readOnly: true,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton><EventIcon /></IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              fullWidth
+              margin="dense"
+            />
+          </Grid>
+
+          {/* City */}
+          <Grid item md={6} xs={12}>
+            <TextField
+              margin="dense"
+              variant="outlined"
+              name="city"
+              label="City"
+              style={{ width: "100%" }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton><LocationCityIcon /></IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              value={education.city || ""}
+              onChange={handleChange}
+            />
+          </Grid>
+
+          {/* CGPA */}
+          <Grid item md={6} xs={12}>
+            <TextField
+              margin="dense"
+              variant="outlined"
+              name="grades"
+              label="CGPA"
+              style={{ width: "100%" }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton><GradeIcon /></IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              value={education.grades || ""}
+              onChange={handleChange}
+            />
+          </Grid>
+        </Grid>
       </CardContent>
 
-      <Grid container spacing={2} alignItems="center" lg={12} >
+      {/* Navigation Links */}
+      <Grid container spacing={2} alignItems="center" lg={12}>
         <Grid item md={12} sm={12} xs={12} lg={12} style={containerStyles}>
           <Link to={'/profile'} style={linkStyle}>
-            <ArrowBackIcon style={iconStyle} />
-            <h4>Profile Section</h4>
+            <ArrowBackIcon style={iconStyle} sx={{ color: '#FF6F00' }} />
+            <h4 className="text-[#FF6F00]">Profile Section</h4>
           </Link>
           <Link to={'/projects'} style={linkStyle}>
-            <h4>Project Section</h4>
-            <ArrowForwardIcon style={iconStyle} />
+            <h4 className="text-[#FF6F00]">Project Section</h4>
+            <ArrowForwardIcon style={iconStyle} sx={{ color: '#FF6F00' }} />
           </Link>
         </Grid>
       </Grid>
+
+      {/* Dropdown Year Menu */}
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            maxHeight: 48 * 5, // ~5 items
+            width: anchorEl ? anchorEl.clientWidth : 200,
+          },
+        }}
+      >
+        {years.map((year) => (
+          <MenuItem key={year} onClick={() => handleYearSelect(fieldType, year)}>
+            {year}
+          </MenuItem>
+        ))}
+        <MenuItem onClick={() => handleYearSelect(fieldType, "")}>Clear Selection</MenuItem>
+      </Menu>
     </div>
   );
 };
@@ -645,9 +278,9 @@ const linkStyle = {
   justifyContent: 'end',
   alignItems: 'center',
   gap: '5px',
-  transition: 'border-radius 0.3s', // Add transition for border-radius
-  borderRadius: '4px', // Initial border-radius
-  padding: '5px', // Add padding for hover effect
+  transition: 'border-radius 0.3s',
+  borderRadius: '4px',
+  padding: '5px',
 };
 
 const containerStyles = {
@@ -655,14 +288,14 @@ const containerStyles = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  // backgroundColor: 'crimson',
   marginTop: '20px',
   paddingRight: '40px',
   paddingLeft: '40px',
 };
+
 const iconStyle = {
-  verticalAlign: 'middle', // Align icon vertically with text
-  marginLeft: '5px', // Add margin between icon and text
+  verticalAlign: 'middle',
+  marginLeft: '5px',
 };
 
 export default Education;

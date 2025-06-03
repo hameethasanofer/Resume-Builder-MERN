@@ -18,14 +18,12 @@ import PersonIcon from "@mui/icons-material/Person";
 import HomeIcon from "@mui/icons-material/Home";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../redux/profileSlice";
-import { Link } from 'react-router-dom';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Link } from "react-router-dom";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const currentProfile = useSelector((state) => state.profileDetails);
-
-  // console.log("Profilepage:", currentProfile);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -33,320 +31,228 @@ const Profile = () => {
   };
 
   const containerStyle = {
-    marginTop: "30",
+    marginTop: "0px",
+    paddingTop: "0px",
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
     backgroundColor: "var(--cardBg)",
+    marginBottom: "0px"
+    
+    
   };
 
   return (
-    <div style={containerStyle}>
-      <Card>
+    <div style={containerStyle}  >
+      <Card elevation={0} sx={{ boxShadow: "none", marginBottom: 4 }} >
         <CardHeader
           title={
-            <Typography variant="h5" align="center" fontWeight="bold">
+            <Typography variant="h5" align="center" fontWeight="bold" className="text-[#ff8c00] md:mb-[2rem]">
               Personal Details
             </Typography>
           }
+          sx={{ paddingBottom: 0 }}
         />
       </Card>
-      <CardContent>
-        <div>
-          <Grid container spacing={2} alignItems="center" lg={12}>
-            <Grid item md={6} sm={12} xs={12} lg={6}>
-              <TextField
-                margin="dense"
-                variant="outlined"
-                type="text"
-                name="firstName"
-                label="FirstName"
-                style={{ width: "100%" }}
-                required
-                value={currentProfile?.firstName}
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton>
-                        <PersonIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-            <Grid item md={6} sm={12} xs={12} lg={6}>
-              <TextField
-                margin="dense"
-                variant="outlined"
-                type="text"
-                name="lastName"
-                label="LastName"
-                style={{ width: "100%" }}
-                required
-                value={currentProfile?.lastName}
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton>
-                        <PersonIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={2} alignItems="center" lg={12}>
-            <Grid item md={6} sm={12} xs={12} lg={6}>
-              <TextField
-                margin="dense"
-                variant="outlined"
-                type="email"
-                name="email"
-                label="Email"
-                style={{ width: "100%" }}
-                required
-                value={currentProfile?.email}
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton>
-                        <EmailIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-            <Grid item md={6} sm={12} xs={12} lg={6}>
-              <TextField
-                margin="dense"
-                variant="outlined"
-                type="text"
-                name="mobile"
-                label="MobileNo"
-                style={{ width: "100%" }}
-                required
-                value={currentProfile?.mobile}
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton>
-                        <PhoneIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-          </Grid>
-          {/* <Grid container spacing={2} alignItems="center" lg={12}>
-            <Grid item md={12} sm={12} xs={12} lg={12}>
-              <TextField
-                margin="dense"
-                variant="outlined"
-                type="text"
-                name="aboutMe"
-                label="About Me"
-                multiline
-                rows={2}
-                fullWidth
-                style={{ width: "100%" }}
-                value={currentProfile?.aboutMe}
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton>
-                        <PersonIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-          </Grid> */}
-          <Grid container spacing={2} alignItems="center" lg={12}>
-            <Grid item md={12} sm={12} xs={12} lg={12}>
-              <TextField
-                margin="dense"
-                variant="outlined"
-                type="text"
-                name="address"
-                label="Address"
-                multiline
-                rows={1}
-                fullWidth
-                style={{ width: "100%" }}
-                value={currentProfile?.address}
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton>
-                        <HomeIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={2} alignItems="center" lg={12}>
-            <Grid item md={6} sm={12} xs={12} lg={6}>
-              <TextField
-                margin="dense"
-                variant="outlined"
-                type="text"
-                name="linkedIn"
-                label="Linked In"
-                style={{ width: "100%" }}
-                value={currentProfile?.linkedIn}
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton>
-                        <LinkedInIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-            <Grid item md={6} sm={12} xs={12} lg={6}>
-              <TextField
-                margin="dense"
-                variant="outlined"
-                type="text"
-                name="github"
-                label="Github"
-                style={{ width: "100%" }}
-                value={currentProfile?.github}
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton>
-                        <GitHubIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={2} alignItems="center" lg={12}>
-            <Grid item md={6} sm={12} xs={12} lg={6}>
-              <TextField
-                margin="dense"
-                variant="outlined"
-                type="text"
-                name="codechef"
-                label="Codechef"
-                style={{ width: "100%" }}
-                value={currentProfile?.codechef}
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton>
-                        <CodeIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-            <Grid item md={6} sm={12} xs={12} lg={6}>
-              <TextField
-                margin="dense"
-                variant="outlined"
-                type="text"
-                name="leetcode"
-                label="Leetcode"
-                style={{ width: "100%" }}
-                value={currentProfile?.leetcode}
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton>
-                        <CodeIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={2} alignItems="center" lg={12}>
-            <Grid item md={12} sm={12} xs={12} lg={12}>
-              <TextField
-                margin="dense"
-                variant="outlined"
-                type="text"
-                name="codeforces"
-                label="Codeforces"
-                style={{ width: "100%" }}
-                value={currentProfile?.codeforces}
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton>
-                        <CodeIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-          </Grid>
-        </div>
 
+      <CardContent sx={{ paddingTop: 0  }}>
+        <Grid container spacing={6} >
+          <Grid item xs={12} md={6}>
+            <TextField
+              name="firstName"
+              label="First Name"
+              fullWidth
+              margin="dense"
+              value={currentProfile.firstName}
+              onChange={handleChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <PersonIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              name="lastName"
+              label="Last Name"
+              fullWidth
+              margin="dense"
+              value={currentProfile.lastName}
+              onChange={handleChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <PersonIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <TextField
+              name="email"
+              label="Email"
+              fullWidth
+              margin="dense"
+              value={currentProfile.email}
+              onChange={handleChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <EmailIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              name="mobile"
+              label="Mobile"
+              fullWidth
+              margin="dense"
+              value={currentProfile.mobile}
+              onChange={handleChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <PhoneIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12}md={6}>
+            <TextField
+              name="address"
+              label="Address"
+              fullWidth
+              margin="dense"
+              value={currentProfile.address}
+              onChange={handleChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <HomeIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <TextField
+              name="codeforces"
+              label="Codeforces"
+              fullWidth
+              margin="dense"
+              value={currentProfile.codeforces}
+              onChange={handleChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <CodeIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <TextField
+              name="linkedIn"
+              label="LinkedIn"
+              fullWidth
+              margin="dense"
+              value={currentProfile.linkedIn}
+              onChange={handleChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <LinkedInIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              name="github"
+              label="GitHub"
+              fullWidth
+              margin="dense"
+              value={currentProfile.github}
+              onChange={handleChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <GitHubIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <TextField
+              name="codechef"
+              label="CodeChef"
+              fullWidth
+              margin="dense"
+              value={currentProfile.codechef}
+              onChange={handleChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <CodeIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              name="leetcode"
+              label="LeetCode"
+              fullWidth
+              margin="dense"
+              value={currentProfile.leetcode}
+              onChange={handleChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <CodeIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+
+          
+        </Grid>
       </CardContent>
 
-      <Grid container spacing={2} alignItems="center" lg={12} >
-        <Grid item md={12} sm={12} xs={12} lg={12} style={containerStyles}>
-          <Link to={'/education'} style={linkStyle}>
-            <h4>Education Section</h4>
-            <ArrowForwardIcon style={iconStyle} />
-          </Link>
-        </Grid>
-      </Grid>
+      <div style={{ display: "flex", justifyContent: "flex-end", marginRight: "40px", marginTop: "10px" }}>
+        <Link to="/education" style={linkStyle}>
+          <h4 className="text-[#ff8c00]">Education Section</h4>
+          <ArrowForwardIcon sx={{ color: '#FF6F00' }}/>
+        </Link>
+      </div>
     </div>
   );
 };
 
 const linkStyle = {
-  textDecoration: 'none',
-  color: 'inherit',
-  display: 'flex',
-  justifyContent: 'end',
-  alignItems: 'center',
-  gap: '5px',
-  transition: 'border-radius 0.3s', // Add transition for border-radius
-  borderRadius: '4px', // Initial border-radius
-  padding: '5px', // Add padding for hover effect
+  textDecoration: "none",
+  color: "inherit",
+  display: "flex",
+  alignItems: "center",
+  gap: "5px",
 };
 
-const containerStyles = {
-  marginBottom: '20px',
-  display: 'flex',
-  justifyContent: 'end',
-  alignItems: 'center',
-  // backgroundColor: 'crimson',
-  marginTop: '20px',
-  paddingRight: '40px',
-};
-const iconStyle = {
-  verticalAlign: 'middle', // Align icon vertically with text
-  marginLeft: '5px', // Add margin between icon and text
-};
 export default Profile;
